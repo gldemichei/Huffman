@@ -8,7 +8,7 @@ Huffman tree coder and decoder.
   > python Codificador.py
 
 * O programa poderá receber argumentos da seguinte maneira:
-  > python Codificador.py <arquivo_com_texto_bruto> <output>
+  > python Codificador.py <arquivo_com_texto_bruto> <output.file>
 
 ### Programa Decodificador
 
@@ -16,5 +16,5 @@ Huffman tree coder and decoder.
   > python Decodificador.py
 
 * O programa poderá receber argumentos da seguinte maneira:
-  > python Decodificador.py <arquivo_com_codigos> <arquivo_codificado> <output>
+  > python Decodificador.py <arquivo_com_codigos> <arquivo_codificado> <output.file>
 
