@@ -7,6 +7,7 @@
 
 # Abre arquivo do texto a ser decodificado
 import ast
+import sys
 
 
 class Node:
@@ -33,9 +34,19 @@ class Node:
             self.right.insert(code[1:], char)
 
 
-# abre arquivo contendo os codigos e os insere no dict(codes).
+# Abre arquivo contendo os codigos de huffman, o que contem texto codificado e arquivo a ser escrito
+if len(sys.argv) >= 4:
+    f_codes = open(sys.argv[1], "r")
+    f_codificado = open(sys.argv[2], "r")
+    f_out = open(sys.argv[3], "w")
+else:
+    f_codes = open("testes/decod.txt", "r")
+    f_codificado = open("testes/codificado.txt", "r")
+    f_out = open("testes/out.txt", "w")
+
+
+# Insere no dict(codes) os pares de char-codigo encontrados no arquivo de entrada.
 codes = {}
-f_codes = open("codes.txt", "r")
 for code in f_codes:
     lst = code.split(":")
     codes[lst[1][1:-1]] = lst[0]
@@ -45,13 +56,10 @@ root = Node()
 for code, char in codes.items():
     root.insert(code, char)
 
-#Abre texto codificado e arquivo a ser escrito
-f_codificado = open("codificado.txt", "r")
+
 texto = f_codificado.read()
 nodo = root
-f_out = open("out.txt", "w")
 out = ""
-
 # Percorre a arvore enquanto há texto. Ao passar por uma folha, concatena seu valor no output, reseta nodo para root e volta a fazer o mesmo para o restante do texto codificado.
 while texto:
     if texto[0] =='0':

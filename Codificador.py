@@ -2,10 +2,11 @@
 # T2 - 25/06/2020
 # Grupo: Lucca Molon e Gustavo Demichei
 
-# Abre o arquivo "king_james.txt" e exporta os codigos huffmna no arquivo "codes.txt"
+# Abre o arquivo "king_james.txt" e exporta os codigos huffman no arquivo "codes.txt"
 
 from heapq import heappush, heappop, heapify
 from collections import defaultdict
+import sys
 
 # Dado um dicionário, contendo cada caracter(key) e sua frequência(value) no texto, 
 # cria um heap para definir a codificação de Huffman de cada elemento , a inserindo 
@@ -23,8 +24,14 @@ def encode(dict):
         heappush(heap, [lo[0] + hi[0]] + lo[1:] + hi[1:])
     return sorted(heappop(heap)[1:], key=lambda p: (len(p[-1]), p))
 
-# Abre arquivo do texto a ser codificado
-f = open("king_james.txt", "r")
+# Abre arquivo do texto a ser codificado e arquivo destino, que será populado com os códigos Huffman
+if len(sys.argv) >= 3:
+    f = open(sys.argv[1], "r")
+    arquivo = open(sys.argv[2], "w")
+else:
+    f = open("testes/king_james.txt", "r")
+    arquivo = open('testes/codes.txt', 'w')
+
 
 # cria dicionário com os caracteres contidos no texto e a frequência com que aparecem.
 dict = defaultdict(int)
@@ -36,18 +43,16 @@ for line in f:
             dict[chr] = 1
 
 huffman = encode(dict)
-print(type(huffman))
 
-# cria arquivo destino, que será populado com os códigos Huffman
-arquivo = open('codes.txt', 'w')
+
 
 # imprime caracter, frequência e código Huffman e esqcreve o arquivo de saída com os dados.
-print("char\tfreq\tcode")
 for p in huffman:
-    print((p[0], dict[p[0]], p[1]))
     char = p[0] # pois um dos characters e \n
     if char == "\n":
         char = "\\n"
     s = "{}: {}\n".format(char, p[1])
     arquivo.write(s)
+
 arquivo.close()
+f.close()
